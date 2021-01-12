@@ -1,6 +1,8 @@
 package guru.springframework.spring5recipesapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -21,11 +23,12 @@ public class Recipe {
     @Lob
     private byte[] image;
 
-
-
     //Relationship attributes
     @OneToOne(cascade= CascadeType.ALL)
     private Notes notes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients=new HashSet<>();
 
     public Long getId() {
         return id;
@@ -106,4 +109,13 @@ public class Recipe {
     public void setNotes(Notes notes) {
         this.notes = notes;
     }
+
+    public Set<Ingredient> getIngredients(){
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients){
+        this.ingredients=ingredients;
+    }
+
 }
